@@ -373,6 +373,13 @@ function showHide(element) {
               </tbody>
             </table>
 
+            <pre><code id="python_code">  batch_size, num_class = 32, 10
+  loss_fn = StandardAUTKCLoss(surrogate='Sq', K=3, epoch_to_paced=0)
+  preds = torch.randn(batch_size, num_class, requires_grad=True)
+  targets = torch.empty(batch_size, dtype=torch.long).random_(1)
+  loss = loss_fn(preds, targets)
+  loss.backward()</code></pre>
+
               <a id="Model"></a>              
               <!-- Submit request-->
             </div>
