@@ -335,7 +335,10 @@ function showHide(element) {
               <h3>XCurve.Losses.AUTKC</h3>
 
               We build the model, the loss function, and the optimizer. By default, we use the <b><code>resnet18</code></b> provided by Pytorch. The <b><code>StandardAUTKCLoss</code></b> function return the AUTKC loss, whose essential parameters are explained below:
-
+              
+              <br>
+              <br>
+              <pre><code id="python_code">  CLASS StandardAUTKCLoss(surrogate='Sq', K=5, epoch_to_paced=5)</code></pre>
             
             <table class="table">
               <tbody>
@@ -346,21 +349,21 @@ function showHide(element) {
                   <td>
 
                     <dt><strong>
-                      surrogate
+                      surrogate (str)
                     </strong></dt>
                     <p>
                       This parameter specifies the surrogate loss, whose options include <b><code>Sq</code></b>, <b><code>Exp</code></b>, <b><code>Logit</code></b>, and <b><code>Hinge</code></b>;
                     </p>
                     
                     <dt><strong>
-                      K
+                      K (int)
                     </strong></dt>
                     <p>
                       This parameter specifies the hyperparameter <b><code>K</code></b> for the AUTKC loss;
                     </p>
 
                     <dt><strong>
-                      epoch_to_paced
+                      epoch_to_paced (int)
                     </strong></dt>
                     <p>
                       This parameter specifies the number of warm-up epoch for training. By default, we use the CE loss as the warm-up loss.

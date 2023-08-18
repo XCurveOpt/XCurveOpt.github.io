@@ -332,7 +332,7 @@ function showHide(element) {
                 </ol>
               </nav>
 
-              <h3>XCurve.Losses.ParrialAUROC</h3>
+              <h3>XCurve.Losses.PartialAUROC</h3>
 
               The PartialAUROC Loss consists of three parts: <b><code>RelaxedPAUCLoss</code></b>, <b><code>InsRelaxedPAUCLoss</code></b>, and <b><code>UnbiasedPAUCLoss</code></b>.
 
@@ -352,49 +352,49 @@ function showHide(element) {
                     </th>
                     <td>
                       <dt><strong>
-                        gamma
+                        gamma (float)
                       </strong></dt>
                       <p>
                         The safe margin for the BaseAUCLoss function.
                       </p>
                       
                       <dt><strong>
-                        $E_k$
+                        $E_k$ (int)
                       </strong></dt>
                       <p>
                         The number of warm-up epochs where the loss is computed using the <b><code>torch.nn.BCELoss()</code></b> function.
                       </p>
   
                       <dt><strong>
-                        weight_scheme
+                        weight_scheme (str)
                       </strong></dt>
                       <p>
                         The weight scheme used in the calculation of the BaseAUCLoss function.
                       </p>
 
                       <dt><strong>
-                        num_classes
+                        num_classes (int)
                       </strong></dt>
                       <p>
                         The number of classes in the binary classification problem.
                       </p>
 
                       <dt><strong>
-                        reduction
+                        reduction (str, <b><code>'mean'</code></b> or <b><code>'sum'</code></b>)
                       </strong></dt>
                       <p>
                         The method of aggregating the loss.
                       </p>
 
                       <dt><strong>
-                        AUC_type
+                        AUC_type (str)
                       </strong></dt>
                       <p>
                         The type of optimization to be performed (OPAUC or TPAUC).
                       </p>
 
                       <dt><strong>
-                        first_state_loss
+                        first_state_loss (criterion)
                       </strong></dt>
                       <p>
                         The loss function to be used during the warm-up epochs.
@@ -424,63 +424,63 @@ function showHide(element) {
                     </th>
                     <td>
                       <dt><strong>
-                        gamma
+                        gamma (float)
                       </strong></dt>
                       <p>
                         The safe margin for the BaseAUCLoss function.
                       </p>
                       
                       <dt><strong>
-                        $E_k$
+                        $E_k$ (int)
                       </strong></dt>
                       <p>
                         The number of warm-up epochs where the loss is computed using the <b><code>torch.nn.BCELoss()</code></b> function.
                       </p>
   
                       <dt><strong>
-                        weight_scheme
+                        weight_scheme (str)
                       </strong></dt>
                       <p>
                         The weight scheme used in the calculation of the BaseAUCLoss function.
                       </p>
 
                       <dt><strong>
-                        num_classes
+                        num_classes (int)
                       </strong></dt>
                       <p>
                         The number of classes in the binary classification problem.
                       </p>
 
                       <dt><strong>
-                        eps
+                        eps (float)
                       </strong></dt>
                       <p>
                         The parameter is used to avoid zero gradient. 
                       </p>
 
                       <dt><strong>
-                        AUC_type
+                        AUC_type (str)
                       </strong></dt>
                       <p>
                         The type of optimization to be performed (OPAUC or TPAUC).
                       </p>
 
                       <dt><strong>
-                        first_state_loss
+                        first_state_loss (criterion)
                       </strong></dt>
                       <p>
                         The loss function to be used during the warm-up epochs.
                       </p>
 
                       <dt><strong>
-                        reg_a
+                        reg_a (float)
                       </strong></dt>
                       <p>
                         The weights of the strong convex constraint.
                       </p>
 
                       <dt><strong>
-                        reg_b
+                        reg_b (float)
                       </strong></dt>
                       <p>
                         The weights of the strong convex constraint.
@@ -509,14 +509,14 @@ function showHide(element) {
                     </th>
                     <td>
                       <dt><strong>
-                        alpha
+                        alpha (int)
                       </strong></dt>
                       <p>
                         The optimization variables. OPAUC when <b><code>alpha=1</code></b>, and TPAUC when <b><code>alpha=2</code></b>
                       </p>
                       
                       <dt><strong>
-                        beta
+                        beta (int)
                       </strong></dt>
                       <p>
                         The optimization variables.

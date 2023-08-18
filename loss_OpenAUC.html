@@ -335,6 +335,11 @@ function showHide(element) {
               <h3>XCurve.Losses.OpenAUC</h3>
 
               We specify the model, the loss function, and the optimizer. To generate open-set samples by the manifold mixup technique, a wrapper model, which will return the manifold, is defined in <b><code>XCurve.OpenAUC.models.wrapper_classes</code></b>. Besides, we define the loss <b><code>StandardOpenAUCLoss</code></b>, whose essential parameters are explained below:
+              
+              <br>
+              <br>
+              
+              <pre><code id="python_code">  CLASS StandardOpenAUCLoss(loss_close, alpha=2, lambda=0.05)</code></pre>
             
             <table class="table">
               <tbody>
@@ -345,21 +350,21 @@ function showHide(element) {
                   <td>
 
                     <dt><strong>
-                      loss_close
+                      loss_close (nn.Module)
                     </strong></dt>
                     <p>
                       This parameter specifies the loss function for close-set samples;
                     </p>
                     
                     <dt><strong>
-                      alpha
+                      alpha (float)
                     </strong></dt>
                     <p>
                       This parameter specifies the beta distribution  that generate the ratio for manifold mixup.
                     </p>
 
                     <dt><strong>
-                      lambd
+                      lambd (float)
                     </strong></dt>
                     <p>
                       This parameter spcifies the hyper-parameter to balance the close-set loss and the open-set loss.
