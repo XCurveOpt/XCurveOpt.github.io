@@ -334,13 +334,13 @@ function showHide(element) {
 
               <h3>XCurve.Losses.AUROC</h3>
 
-              The StandardAUROC Loss consists of three parts: <b><code>SquareAUC Loss</code></b>, <b><code>HingeAUC Loss</code></b>, and <b><code>ExpAUC Loss</code></b>.
+              The StandardAUROC Loss consists of three parts: <b><code>SquareAUCLoss</code></b>, <b><code>HingeAUCLoss</code></b>, and <b><code>ExpAUCLoss</code></b>.
 
               <br>
               <br>
-              <h4>SquareAUC Loss</h4>
+              <h4>SquareAUCLoss</h4>
 
-              The following class supports the computation of SquareAUC loss:
+              The following class supports the computation of SquareAUCloss:
 
               <pre><code id="python_code">  CLASS SquareAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)</code></pre>
               
@@ -389,9 +389,9 @@ function showHide(element) {
   print(loss_Square.item())</code></pre>
               
               <br>
-              <h4>HingeAUC Loss</h4>
+              <h4>HingeAUCLoss</h4>
 
-              The following class supports the computation of HingeAUC loss:
+              The following class supports the computation of HingeAUCloss:
 
               <pre><code id="python_code">  CLASS HingeAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)</code></pre>
               
@@ -440,9 +440,9 @@ function showHide(element) {
   print(loss_Hinge.item())</code></pre>
 
               <br>            
-              <h4>ExpAUC Loss</h4>
+              <h4>ExpAUCLoss</h4>
 
-              The following class supports the computation of ExpAUC loss:
+              The following class supports the computation of ExpAUCloss:
 
               <pre><code id="python_code">  CLASS ExpAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)</code></pre>
               
