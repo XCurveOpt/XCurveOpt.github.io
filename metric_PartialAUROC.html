@@ -291,6 +291,15 @@ function showHide(element) {
                           <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
                             <a class="widget-link" href="./loss_OpenAUC.html">OpenAUC</a>
                           </li>
+                          <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                            <a class="widget-link" href="./loss_AUROC.html">AUROC</a>
+                          </li>
+                          <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                            <a class="widget-link" href="./loss_PartialAUROC.html">PartialAUROC</a>
+                          </li>
+                          <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                            <a class="widget-link" href="./loss_AdversarialAUROC.html">AdversarialAUROC</a>
+                          </li>
                         </ul>
                       </li>
                       <!--li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i><a class="widget-link" href="tutorials_install.html">Installation</a></li>-->
@@ -386,15 +395,15 @@ function showHide(element) {
             </table>
 
             <pre><code id="python_code">  from XCurve.Metrics import PartialAUROC
-              import numpy as np 
-            
-              # binary cases
-              y_true = np.asarray([1, 0] * 50)
-              y_pred = np.random.rand(100)
-              
-              binary_auc=PartialAUROC(y_true=y_true, y_pred=y_pred, min_tpr=1, max_fpr=0.5)
-              print(binary_auc)
-            </code></pre>
+  import numpy as np 
+
+  # binary cases
+  y_true = np.asarray([1, 0] * 50)
+  y_pred = np.random.rand(100)
+  
+  binary_auc=PartialAUROC(y_true=y_true, y_pred=y_pred, min_tpr=1, max_fpr=0.5)
+  print(binary_auc)
+</code></pre>
 
               <a id="Model"></a>              
               <!-- Submit request-->

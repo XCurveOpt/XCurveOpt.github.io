@@ -291,6 +291,15 @@ function showHide(element) {
                           <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
                             <a class="widget-link" href="./loss_OpenAUC.html">OpenAUC</a>
                           </li>
+                          <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                            <a class="widget-link" href="./loss_AUROC.html">AUROC</a>
+                          </li>
+                          <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                            <a class="widget-link" href="./loss_PartialAUROC.html">PartialAUROC</a>
+                          </li>
+                          <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                            <a class="widget-link" href="./loss_AdversarialAUROC.html">AdversarialAUROC</a>
+                          </li>
                         </ul>
                       </li>
                       <!--li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i><a class="widget-link" href="tutorials_install.html">Installation</a></li>-->
@@ -378,18 +387,18 @@ function showHide(element) {
             </table>
 
             <pre><code id="python_code">  from Metrics import OpenAUC
-              import numpy as np 
-            
-              n_close_samples, C, n_open_samples = 10, 5, 8
-              open_set_pred_known = np.random.rand(n_close_samples)
-              open_set_pred_unknown = np.random.rand(n_open_samples)
-              close_set_pred_class = np.random.randint(low=0, high=C, size=(n_close_samples, ))
-              close_set_labels = np.random.randint(low=0, high=C, size=(n_close_samples, ))
-              print(open_set_pred_known, open_set_pred_unknown, close_set_pred_class, close_set_labels)
-            
-              openauc = OpenAUC(open_set_pred_known, open_set_pred_unknown, close_set_pred_class, close_set_labels)
-              print(openauc)
-            </code></pre>
+  import numpy as np 
+
+  n_close_samples, C, n_open_samples = 10, 5, 8
+  open_set_pred_known = np.random.rand(n_close_samples)
+  open_set_pred_unknown = np.random.rand(n_open_samples)
+  close_set_pred_class = np.random.randint(low=0, high=C, size=(n_close_samples, ))
+  close_set_labels = np.random.randint(low=0, high=C, size=(n_close_samples, ))
+  print(open_set_pred_known, open_set_pred_unknown, close_set_pred_class, close_set_labels)
+
+  openauc = OpenAUC(open_set_pred_known, open_set_pred_unknown, close_set_pred_class, close_set_labels)
+  print(openauc)
+</code></pre>
 
               <a id="Model"></a>              
               <!-- Submit request-->

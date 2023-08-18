@@ -327,85 +327,171 @@ function showHide(element) {
             <div class="col-lg-9 content py-4">
               <nav aria-label="breadcrumb">
                 <ol class="py-1 my-2 breadcrumb">
-                  <li class="breadcrumb-item"><a href="tutorials.html">XCurve</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Metrics.AUPRC</li>
+                  <li class="breadcrumb-item"><a href="tutorials.html">Tutorials</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Documentation</li>
                 </ol>
               </nav>
 
-              <h3>XCurve.Metrics.AUPRC</h3>
+              <h3>XCurve.Losses.AUROC</h3>
 
-              Compute Area Under the PR Curve (AUPRC) for the retrieval task. 
-              Given the d-dim features $\{z_i\}_{i=1}^n$ and category labels $\{c_i\}_{i=1}^n$, the function takes an example with index $q$ as the query, and then compute the scores and targets:
-              $$
-                s_i = z_q^\top z_i / (\|z_q\|\|z_i\|),~~ 1\leq i \leq n, i \neq q.
-              $$
-              Denote $I^+ = \{i|c_i = c_q, 1\leq i \leq n, i \neq q\}$, $I^- = \{i|c_i \neq c_q, 1\leq i \leq n, i \neq q\}$. Afterward, the AUPRC of the query $q$ is defined as
-              $$
-                \text{AUPRC} = \frac{1}{|I^+|} \sum_{i\\in I^+} \frac{\sum_{j\in I^+}\mathbb{I}[s_i \leq s_j]}{\sum_{j\in I^+ \cup I^-}\mathbb{I}[s_i \leq s_j]}.
-              $$
-              The overall AUPRC is measures by the average value of all possible $q$:
-              $$
-                \text{AUPRC}_q = \frac{1}{n} \sum_{q=1}^n \text{AUPRC}_q.
-              $$
+              The StandardAUROC Loss consists of three parts: <b><code>SquareAUC Loss</code></b>, <b><code>HingeAUC Loss</code></b>, and <b><code>ExpAUC Loss</code></b>.
 
-              <!--The following functions computer the AUPRC and Recall@K metrics as 
-              <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUPRC/metrics.py">[SOURCE]</a>:-->
+              <br>
+              <br>
+              <h4>SquareAUC Loss</h4>
 
-            <!-- nwx-->
-            <table class="table">
-              <tbody>
-                <tr>
-                  <th scope="row">
-                    <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-                  </th>
-                  <td>
-                    
-                    <!-- <dt><strong>y_true</strong>, int, default=2</dt>
-                      <p>Number of components to keep. Should be in 
-                        <code class="docutils literal notranslate">
-                          <span class="pre">[1,</span> <span class="pre">min(n_samples,</span>
-                          <span class="pre">n_features,</span> 
-                          <span class="pre">n_targets)]</span>
-                        </code>.
-                      </p> -->
-                    <dt><strong>feats</strong></dt>
-                    <p>(torch.Tensor or np.ndarry): Input features of shape (N_samples, embedding_dim).
-                    </p>
+              The following class supports the computation of SquareAUC loss:
 
-                    <dt><strong>targets</strong></dt>
-                    <p>(torch.Tensor or np.ndarry): Ground truth of shape (N_samples).
-                    </p>
-
-                    <dt><strong>k</strong></dt>
-                    <p>(int or list[int]): List of k to computer Recall@k.
-                    </p>
-
-                  </td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                  <th scope="row">
-                    <dt class="field-odd">Return<span class="colon">:</span></dt>
-                  </th> 
-                  <td>
-                    <dt><strong>AUC</strong></dt><dd><p> return corresponding AUPRC score.</p >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <pre><code id="python_code">  import torch
-  from XCurve.AUPRC import AUPRC, RecallAtK
-
-  feats = torch.randn((2**14, 128)).numpy()
-  targets = torch.randint(0, 1000, (2**14, 1)).numpy()
-  print(AUPRC(feats, targets))
-  print(RecallAtK(feats, targets, 1))
-  print(RecallAtK(feats, targets, [1,4,16]))</code></pre>
+              <pre><code id="python_code">  CLASS SquareAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)</code></pre>
               
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                    </th>
+                    <td>
+                      <dt><strong>
+                        num_classes (int)
+                      </strong></dt>
+                      <p>
+                        The number of classes in the classification problem. 
+                      </p>
+                      
+                      <dt><strong>
+                        gamma (float)
+                      </strong></dt>
+                      <p>
+                        The safe margin for the loss (default=1.0).
+                      </p>
+  
+                      <dt><strong>
+                        transform (str)
+                      </strong></dt>
+                      <p>
+                        The manner of computing the multi-class AUROC Metric, either 'ovo' or 'ova' (default as 'ovo' in our paper).
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pre><code id="python_code">  import torch
+  from XCurve.AUROC.losses import SquareAUCLoss
+                
+  feats = torch.softmax(torch.randn(16, 9).cuda(), dim=1)
+  targets = torch.tensor([0,1,2,3,4,5,6,7,8,7,6,5,4,3,2,1]).cuda()
+  criterion_Square = SquareAUCLoss(
+  num_classes=9,
+  gamma=1.0,
+  transform="ovo")
+  loss_Square = criterion_Square(feats, targets)
+  print(loss_Square.item())</code></pre>
+              
+              <br>
+              <h4>HingeAUC Loss</h4>
+
+              The following class supports the computation of HingeAUC loss:
+
+              <pre><code id="python_code">  CLASS HingeAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)</code></pre>
+              
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                    </th>
+                    <td>
+                      <dt><strong>
+                        num_classes (int)
+                      </strong></dt>
+                      <p>
+                        The number of classes in the classification problem. 
+                      </p>
+                      
+                      <dt><strong>
+                        gamma (float)
+                      </strong></dt>
+                      <p>
+                        The safe margin for the loss (default=1.0).
+                      </p>
+  
+                      <dt><strong>
+                        transform (str)
+                      </strong></dt>
+                      <p>
+                        The manner of computing the multi-class AUROC Metric, either 'ovo' or 'ova' (default as 'ovo' in our paper).
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pre><code id="python_code">  import torch
+  from XCurve.AUROC.losses import HingeAUCLoss
+                
+  feats = torch.softmax(torch.randn(16, 9).cuda(), dim=1)
+  targets = torch.tensor([0,1,2,3,4,5,6,7,8,7,6,5,4,3,2,1]).cuda()
+  criterion_Hinge = HingeAUCLoss(
+  num_classes=9,
+  gamma=1.0,
+  transform="ovo")
+  loss_Hinge = criterion_Hinge(feats, targets)
+  print(loss_Hinge.item())</code></pre>
+
+              <br>            
+              <h4>ExpAUC Loss</h4>
+
+              The following class supports the computation of ExpAUC loss:
+
+              <pre><code id="python_code">  CLASS ExpAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)</code></pre>
+              
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                    </th>
+                    <td>
+                      <dt><strong>
+                        num_classes (int)
+                      </strong></dt>
+                      <p>
+                        The number of classes in the classification problem. 
+                      </p>
+                      
+                      <dt><strong>
+                        gamma (float)
+                      </strong></dt>
+                      <p>
+                        The safe margin for the loss (default=1.0).
+                      </p>
+  
+                      <dt><strong>
+                        transform (str)
+                      </strong></dt>
+                      <p>
+                        The manner of computing the multi-class AUROC Metric, either 'ovo' or 'ova' (default as 'ovo' in our paper).
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pre><code id="python_code">  import torch
+  from XCurve.AUROC.losses import ExpAUCLoss
+                
+  feats = torch.softmax(torch.randn(16, 9).cuda(), dim=1)
+  targets = torch.tensor([0,1,2,3,4,5,6,7,8,7,6,5,4,3,2,1]).cuda()
+  criterion_Exp = ExpAUCLoss(
+    num_classes=9,
+    gamma=1.0,
+    transform="ovo")
+  loss_Exp = criterion_Exp(feats, targets)
+  print(loss_Exp.item())</code></pre>
+
               <a id="Model"></a>              
-              <!-- Submit request-->
+            </div>
 
           </div>
         </div>

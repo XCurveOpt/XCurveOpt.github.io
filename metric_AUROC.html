@@ -291,6 +291,15 @@ function showHide(element) {
                           <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
                             <a class="widget-link" href="./loss_OpenAUC.html">OpenAUC</a>
                           </li>
+                          <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                            <a class="widget-link" href="./loss_AUROC.html">AUROC</a>
+                          </li>
+                          <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                            <a class="widget-link" href="./loss_PartialAUROC.html">PartialAUROC</a>
+                          </li>
+                          <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                            <a class="widget-link" href="./loss_AdversarialAUROC.html">AdversarialAUROC</a>
+                          </li>
                         </ul>
                       </li>
                       <!--li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i><a class="widget-link" href="tutorials_install.html">Installation</a></li>-->
@@ -403,29 +412,28 @@ function showHide(element) {
             </table>
 
             <pre><code id="python_code">  from Metrics import AUROC
-              import numpy as np 
-            
-              # binary cases
-              y_true = np.asarray([1, 0] * 50)
-              y_pred = np.random.rand(100)
-            
-              binary_auc=AUROC(y_true=y_true, y_pred=y_pred)
-              print(binary_auc)
-              
-              # multiclass cases
-              y_true = np.asarray([0, 1, 3, 2, 4] * 10)
-              y_pred = np.random.rand(50, 5)
-              # normalized [0,1]
-              y_pred = np.exp(y_pred)/ np.sum(np.exp(y_pred), axis=1, keepdims=True)
-              
-              # ova
-              mauc_ova = AUROC(y_true=y_true, y_pred=y_pred, multi_type='ova')
-              print(mauc_ova)
-              
-              # ovo
-              mauc_ovo = AUROC(y_true=y_true, y_pred=y_pred, multi_type='ovo', acc=True)
-              print(mauc_ovo)
-            </code></pre>
+  import numpy as np 
+
+  # binary cases
+  y_true = np.asarray([1, 0] * 50)
+  y_pred = np.random.rand(100)
+
+  binary_auc=AUROC(y_true=y_true, y_pred=y_pred)
+  print(binary_auc)
+  
+  # multiclass cases
+  y_true = np.asarray([0, 1, 3, 2, 4] * 10)
+  y_pred = np.random.rand(50, 5)
+  # normalized [0,1]
+  y_pred = np.exp(y_pred)/ np.sum(np.exp(y_pred), axis=1, keepdims=True)
+  
+  # ova
+  mauc_ova = AUROC(y_true=y_true, y_pred=y_pred, multi_type='ova')
+  print(mauc_ova)
+  
+  # ovo
+  mauc_ovo = AUROC(y_true=y_true, y_pred=y_pred, multi_type='ovo', acc=True)
+  print(mauc_ovo)</code></pre>
 
               <a id="Model"></a>              
               <!-- Submit request-->
