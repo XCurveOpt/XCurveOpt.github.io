@@ -302,6 +302,9 @@ function showHide(element) {
                           </li>
                         </ul>
                       </li>
+                      <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                        <a class="widget-link" href="./tutorials_sampler.html">Sampler</a>
+                      </li>
                       <!--li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i><a class="widget-link" href="tutorials_install.html">Installation</a></li>-->
                     </ul>
                   </div>
@@ -342,7 +345,7 @@ function showHide(element) {
 
               The following class supports the computation of RelaxedPAUCLoss:
 
-              <pre><code id="python_code">  CLASS RelaxedPAUCLoss (gamma=1, E_k=0, weight_scheme='Poly', num_classes=2, reduction='mean', AUC_type='OP', first_state_loss=None, **kwargs)</code></pre>
+              <pre><code>  CLASS RelaxedPAUCLoss (gamma=1, E_k=0, weight_scheme='Poly', num_classes=2, reduction='mean', AUC_type='OP', first_state_loss=None, **kwargs)     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/losses/PartialAUROC.py">[SOURCE]</a></code></pre>
               
               <table class="table">
                 <tbody>
@@ -414,7 +417,7 @@ function showHide(element) {
 
               The following class supports the computation of InsRelaxedPAUCLoss:
 
-              <pre><code id="python_code">  CLASS InsRelaxedPAUCLoss (gamma=1, E_k=0, weight_scheme='Poly', num_classes=2, eps=1e-6, AUC_type='OP', first_state_loss=None, reg_a=0.0, reg_b=0.0, **kwargs)</code></pre>
+              <pre><code>  CLASS InsRelaxedPAUCLoss (gamma=1, E_k=0, weight_scheme='Poly', num_classes=2, eps=1e-6, AUC_type='OP', first_state_loss=None, reg_a=0.0, reg_b=0.0, **kwargs)     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/losses/PartialAUROC.py">[SOURCE]</a></code></pre>
               
               <table class="table">
                 <tbody>
@@ -499,7 +502,7 @@ function showHide(element) {
 
               The following class supports the computation of UnbiasedPAUCLoss:
 
-              <pre><code id="python_code">  CLASS UnbiasedPAUCLoss (alpha, beta, device)</code></pre>
+              <pre><code>  CLASS UnbiasedPAUCLoss (alpha, beta, device)     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/losses/PartialAUROC.py">[SOURCE]</a></code></pre>
               
               <table class="table">
                 <tbody>
@@ -536,6 +539,8 @@ function showHide(element) {
               Note: <i><b><code>ASGDA</code></b> in <b><code>XCurve.AUROC.optimizer</code></b> should be the optimizer when using <b><code>UnbiasedPAUCLoss</code></b>.</i>
               
               <br>
+
+              <h5>Example: </h5>
 
               <pre><code id="python_code">  import torch
   from easydict import EasyDict as edict

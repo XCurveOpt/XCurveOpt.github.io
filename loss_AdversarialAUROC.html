@@ -302,6 +302,9 @@ function showHide(element) {
                           </li>
                         </ul>
                       </li>
+                      <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                        <a class="widget-link" href="./tutorials_sampler.html">Sampler</a>
+                      </li>
                       <!--li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i><a class="widget-link" href="tutorials_install.html">Installation</a></li>-->
                     </ul>
                   </div>
@@ -343,7 +346,7 @@ function showHide(element) {
 
               The following class supports the computation of AdvAUROCLoss:
 
-              <pre><code id="python_code">  CLASS AdvAUROCLoss (imratio=None, a=None, b=None, alpha=None)</code></pre>
+              <pre><code>  CLASS AdvAUROCLoss (imratio=None, a=None, b=None, alpha=None)     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/losses/AdversarialAUROC/AdversarialAUROC.py">[SOURCE]</a></code></pre>
 
               <table class="table">
                 <tbody>
@@ -377,9 +380,11 @@ function showHide(element) {
               <br>
               <br>
 
-              <pre><code id="python_code">  CLASS AdvAUCOptimizer (params, a, b, alpha, lr=required, momentum=0.9, dampening=0, weight_decay=0, nesterov=False)</code></pre>
+              <pre><code>  CLASS AdvAUCOptimizer (params, a, b, alpha, lr=required, momentum=0.9, dampening=0, weight_decay=0, nesterov=False)</a></code></pre>
 
               <br>
+
+              <h5>Example: </h5>
 
               <pre><code id="python_code">  import torch
   from XCurve.AUROC.losses import AdvAUROCLoss
@@ -394,7 +399,7 @@ function showHide(element) {
 
               <h4>RegAdvAUROCLoss</h4>
 
-              <pre><code id="python_code">  CLASS RegAdvAUROCLoss (imratio=None, a=None, b=None, alpha=None, lambda1=None, lambda2=None)</code></pre>
+              <pre><code>  CLASS RegAdvAUROCLoss (imratio=None, a=None, b=None, alpha=None, lambda1=None, lambda2=None)     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/losses/AdversarialAUROC/AdversarialAUROC.py">[SOURCE]</a></code></pre>
 
             <table class="table">
               <tbody>
@@ -434,9 +439,11 @@ function showHide(element) {
               <br>
               <br>
 
-              <pre><code id="python_code">  CLASS RegAdvAUCOptimizer (params, a, b, alpha, lambda1, lambda2, c1=1, c2=1, gamma=1, lamda=1, lr=required)</code></pre>
+              <pre><code>  CLASS RegAdvAUCOptimizer (params, a, b, alpha, lambda1, lambda2, c1=1, c2=1, gamma=1, lamda=1, lr=required)</code></pre>
 
               <br>
+
+              <h5>Example: </h5>
                 
               <pre><code id="python_code">  import torch
   from XCurve.AUROC.losses import RegAdvAUROCLoss

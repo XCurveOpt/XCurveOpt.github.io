@@ -302,6 +302,9 @@ function showHide(element) {
                           </li>
                         </ul>
                       </li>
+                      <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                        <a class="widget-link" href="./tutorials_sampler.html">Sampler</a>
+                      </li>
                       <!--li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i><a class="widget-link" href="tutorials_install.html">Installation</a></li>-->
                     </ul>
                   </div>
@@ -342,7 +345,7 @@ function showHide(element) {
 
               The following class supports the computation of SquareAUCloss:
 
-              <pre><code id="python_code">  CLASS SquareAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)</code></pre>
+              <pre><code>  CLASS SquareAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/losses/StandardAUROC.py">[SOURCE]</a></code></pre>
               
               <table class="table">
                 <tbody>
@@ -375,6 +378,8 @@ function showHide(element) {
                   </tr>
                 </tbody>
               </table>
+
+              <h5>Example: </h5>
 
               <pre><code id="python_code">  import torch
   from XCurve.AUROC.losses import SquareAUCLoss
@@ -393,7 +398,7 @@ function showHide(element) {
 
               The following class supports the computation of HingeAUCloss:
 
-              <pre><code id="python_code">  CLASS HingeAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)</code></pre>
+              <pre><code>  CLASS HingeAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/losses/StandardAUROC.py">[SOURCE]</a></code></pre>
               
               <table class="table">
                 <tbody>
@@ -426,6 +431,8 @@ function showHide(element) {
                   </tr>
                 </tbody>
               </table>
+
+              <h5>Example: </h5>
 
               <pre><code id="python_code">  import torch
   from XCurve.AUROC.losses import HingeAUCLoss
@@ -444,7 +451,7 @@ function showHide(element) {
 
               The following class supports the computation of ExpAUCloss:
 
-              <pre><code id="python_code">  CLASS ExpAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)</code></pre>
+              <pre><code>  CLASS ExpAUCLoss (num_classes, gamma=1, transform='ovo', **kwargs)     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/losses/StandardAUROC.py">[SOURCE]</a></code></pre>
               
               <table class="table">
                 <tbody>
@@ -477,6 +484,8 @@ function showHide(element) {
                   </tr>
                 </tbody>
               </table>
+
+              <h5>Example: </h5>
 
               <pre><code id="python_code">  import torch
   from XCurve.AUROC.losses import ExpAUCLoss

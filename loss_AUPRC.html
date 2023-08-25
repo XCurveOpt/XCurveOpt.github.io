@@ -302,6 +302,9 @@ function showHide(element) {
                           </li>
                         </ul>
                       </li>
+                      <li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i>
+                        <a class="widget-link" href="./tutorials_sampler.html">Sampler</a>
+                      </li>
                       <!--li class="d-flex"><i class="ai-book text-muted mt-2 me-2"></i><a class="widget-link" href="tutorials_install.html">Installation</a></li>-->
                     </ul>
                   </div>
@@ -336,7 +339,7 @@ function showHide(element) {
 
               The following functions build the class to compute the List-stable AUPRC loss:
 
-              <pre><code id="python_code">  CLASS XCurve.AUPRC.RetrievalDataset(data_dir, list_dir, subset, input_size, batchsize, num_sample_per_id, normal_mean=[0.485, 0.456, 0.406], normal_std=[0.229, 0.224, 0.225], split='train')</code></pre>
+              <pre><code>  CLASS XCurve.AUPRC.RetrievalDataset(data_dir, list_dir, subset, input_size, batchsize, num_sample_per_id, normal_mean=[0.485, 0.456, 0.406], normal_std=[0.229, 0.224, 0.225], split='train')     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUPRC/losses/base_loss.py">[SOURCE]</a></code></pre>
             
             <table class="table">
               <tbody>
@@ -398,6 +401,8 @@ function showHide(element) {
                 </tr>
               </tbody>
             </table>
+
+            <h5>Example: </h5>
 
             <pre><code id="python_code">  import torch.nn.functional as F
   from XCurve.AUPRC import (ListStableAUPRC, DefaultLossCfg, \
