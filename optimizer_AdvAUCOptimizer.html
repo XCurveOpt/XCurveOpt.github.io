@@ -358,36 +358,15 @@ function showHide(element) {
               <nav aria-label="breadcrumb">
                 <ol class="py-1 my-2 breadcrumb">
                   <li class="breadcrumb-item"><a href="tutorials.html">Documentation</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Sampler</li>
+                  <li class="breadcrumb-item active" aria-current="page">Optimizer</li>
                 </ol>
               </nav>
 
-              <h3>Stragidied Sampler</h3>
-
-              As the computation of AUC involves both positive and negative samples, it is essential that each class's samples are present within a batch. This necessity has led to the development of the following <b><code>StratifiedSampler</code></b> class:
-
-              <P></P>
-
-              <pre><code>  CLASS StratifiedSampler (class_vector, batch_size, rpos=1, rneg=4)     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/dataloaders/sampler.py">[SOURCE]</a></code></pre> 
+              <h3>AdvAUCOptimizer</h3>
+              
+              The following class is an optimizer used in conjunction with <b><code>AdversarialAUROC</code></b> Loss:     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/optimizer/AdvAUC_opt.py">[SOURCE]</a>
 
               <P></P>
-
-              When the number of classes is equal to 2, sample according to the ratio of rpos and rneg. If the number of samples is not enough, complete by copying and sampling.
-
-              <P></P>
-
-              When the number of classes is greater than 2, sample according to the proportion of each class in the dataset.
-
-              <P></P>
-
-              When the number of classes is less than 2, an error is reported.
-
-              <P></P>
-
-              In addition, after sampling, the index will be randomly scrambled and this portion of data will be removed from the dataset.
-
-              <P></P>
-
 
               <!--The following functions computer the AUPRC and Recall@K metrics as 
               <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUPRC/metrics.py">[SOURCE]</a>:-->
@@ -409,16 +388,91 @@ function showHide(element) {
                           <span class="pre">n_targets)]</span>
                         </code>.
                       </p> -->
-                    <dt><strong>class_vector (torch.Tensor or np.ndarry)</strong></dt>
-                    <p>The input vector.
+                    <dt><strong>params (generator)</strong></dt>
+                    <p>This is a list or an iterable that contains the parameters of the neural network or model that you want to optimize. These parameters include the weights and biases of the model's layers. The optimizer will update these parameters during the optimization process based on the computed gradients.
                     </p>
 
-                    <dt><strong>batch_size (int)</strong></dt>
-                    <p>Number of samples per batch.
+                    <dt><strong>a, b, alpha (float)</strong></dt>
+                    <p>initial values for a, b, $\alpha$ in instance-wise AUROC loss (Default=0.0).
                     </p>
 
-                    <dt><strong>rpos, rneg (int)</strong></dt>
-                    <p>They are only used in binary classification problems to control the sampling ratio of positive and negative class samples.
+                    <dt><strong>lr (float)</strong></dt>
+                    <p>It determines the step size taken in the direction of the gradient during each optimization step.
+                    </p>
+
+                    <dt><strong>momentum (float)</strong></dt>
+                    <p>It is a parameter that helps accelerate the convergence by adding a fraction of the previous update vector to the current update (Default=0.9). 
+                    </p>
+
+                    <dt><strong>dampening (float)</strong></dt>
+                    <p>It is a parameter that can be used to reduce the influence of past updates on the current update when momentum is used (Default=0). 
+                    </p>
+
+                    <dt><strong>weight_decay (float)</strong></dt>
+                    <p>It is a parameter that represents the coefficient of L2 regularization (Default=0).
+                    </p>
+
+                    <dt><strong>nesterov (bool)</strong></dt>
+                    <p>It is a parameter that indicates whether to use Nesterov Accelerated Gradient (Default=False).
+                    </p>
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>RegAdvAUCOptimizer</h3>
+
+            The following class is an optimizer used in conjunction with <b><code>AdversarialAUROC</code></b> Loss:      <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/optimizer/AdvAUC_opt.py">[SOURCE]</a>
+
+              <P></P>
+
+              <!--The following functions computer the AUPRC and Recall@K metrics as 
+              <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUPRC/metrics.py">[SOURCE]</a>:-->
+
+            <!-- nwx-->
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th scope="row">
+                    <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+                  </th>
+                  <td>
+                    
+                    <!-- <dt><strong>y_true</strong>, int, default=2</dt>
+                      <p>Number of components to keep. Should be in 
+                        <code class="docutils literal notranslate">
+                          <span class="pre">[1,</span> <span class="pre">min(n_samples,</span>
+                          <span class="pre">n_features,</span> 
+                          <span class="pre">n_targets)]</span>
+                        </code>.
+                      </p> -->
+                    <dt><strong>params (generator)</strong></dt>
+                    <p>This is a list or an iterable that contains the parameters of the neural network or model that you want to optimize. These parameters include the weights and biases of the model's layers. The optimizer will update these parameters during the optimization process based on the computed gradients.
+                    </p>
+
+                    <dt><strong>a, b, alpha (float)</strong></dt>
+                    <p>initial values for a, b, $\alpha$ in instance-wise AUROC loss (Default=0.0).
+                    </p>
+
+                    <dt><strong>lambda1, lambda2 (float)</strong></dt>
+                    <p>initial coefficient values for regularization (Default=1.0).
+                    </p>
+
+                    <dt><strong>c1, c2 (float)</strong></dt>
+                    <p>These parameters control the momentum updates' exponential decay rates (Default=1.0).
+                    </p>
+
+                    <dt><strong>gamma (float)</strong></dt>
+                    <p>It is used to scale the gradient updates during optimization. (Default=1.0).
+                    </p>
+
+                    <dt><strong>lamda (float)</strong></dt>
+                    <p>It is used in the calculations involving $\alpha$ parameter update. (Default=1.0).
+                    </p>
+
+                    <dt><strong>lr (float):</strong></dt>
+                    <p>It determines the step size taken in the direction of the gradient during each optimization step.
                     </p>
 
                   </td>
@@ -428,41 +482,103 @@ function showHide(element) {
 
             <h5>Example: </h5>
 
-            <pre><code id="python_code">  import torch
-  from easydict import EasyDict as edict
-  from XCurve.AUROC.dataloaders import get_datasets
-  from XCurve.AUROC.dataloaders import get_data_loaders
-
-  # set dataset params, see our doc. for more details.
-  dataset_args = edict({
-    "data_dir": "cifar-10-long-tail/", # relative path of dataset
-    "input_size": [32, 32],
-    "norm_params": {
-      "mean": [123.675, 116.280, 103.530],
-      "std": [58.395, 57.120, 57.375]
-      },
-    "use_lmdb": True,
-    "resampler_type": "None",
-    "sampler": { # only used for binary classification
-      "rpos": 1,
-      "rneg": 10
-      },
-    "npy_style": True,
-    "aug": True, 
-    "class2id": { # positive (minority) class idx
-      "1": 1, "0":0, "2":0, "3":0, "4":0, "5":0,
-      "6":0, "7":0, "8":0, "9":0
-    }
+            <pre><code id="python_code">  from easydict import EasyDict as edict
+  from torchvision import transforms
+  import torch
+  import random
+  import numpy as np
+  from XCurve.AUROC.dataloaders import StratifiedSampler # for imbalanced dataset sampling
+  from XCurve.AUROC.dataloaders import IMBALANCECIFAR10, get_data_loaders # dataloader of Xcurve
+  from XCurve.AUROC.losses import AdvAUROCLoss, PGDAdversary
+  from XCurve.AUROC.optimizer import AdvAUCOptimizer
+  from XCurve.AUROC.models import generate_net # create model or you can adopt any DNN models by Pytorch
+  
+  seed = 1024
+  random.seed(seed)
+  torch.manual_seed(seed)
+  torch.cuda.manual_seed(seed)
+  np.random.seed(seed)
+  torch.backends.cudnn.deterministic = True
+  torch.backends.cudnn.benchmark = False
+  
+  # set params to create model
+  args = edict({
+    "model_type": "resnet18", # (support resnet, densenet121 and mlp)
+    "num_classes": 2, # number of class
+    "pretrained": None # if the model is pretrained
   })
-
-  train_set, val_set, test_set = get_datasets(dataset_args) # load dataset
-  trainloader, valloader, testloader = get_data_loaders(
-    train_set,
-    val_set,
-    test_set,
-    train_batch_size=32,
-    test_batch_size =64
-  ) # load dataloader</code></pre>
+  # Or you can adopt any DNN models by Pytorch
+  model = generate_net(args).cuda() # generate pytorch model 
+  
+  p_hat = 0.1
+  criterion = AdvAUROCLoss(imratio=p_hat)
+  ########################
+  #  create optimizer    #
+  ########################
+  optimizer = AdvAUCOptimizer(model.parameters(), 
+                              criterion.a, criterion.b, criterion.alpha,
+                              lr=0.1, momentum=0.9,
+                              weight_decay=1e-5)
+  
+  transform_train = transforms.Compose([
+    transforms.RandomCrop(32, padding=4),
+    transforms.ToTensor(),
+  ])
+  transform_test = transforms.Compose([
+    transforms.ToTensor(),
+  ])
+  
+  trainset = IMBALANCECIFAR10(root='dataset',
+                                    train=True,
+                                    download=True,
+                                    transform=transform_train)
+  testset = IMBALANCECIFAR10(root='dataset',
+                                  train=False,
+                                  transform=transform_test)
+  
+  sampler = StratifiedSampler(trainset.targets,
+                              batch_size = 32,
+                              rpos = 1,
+                              rneg = 10)
+  
+  train_loader = torch.utils.data.DataLoader(
+    trainset,
+    batch_size=sampler.real_batch_size,
+    shuffle=(sampler is None),
+    num_workers=0,
+    pin_memory=True,
+    sampler=sampler,
+    drop_last=True)
+  
+  # forward of model for one epoch
+  model.train()
+  lower_limit, upper_limit = 0.0, 1.0
+  
+  for index, (X, y) in enumerate(train_loader):
+    X, y  = X.cuda(), y.cuda()
+    # target.shape => [batch_size, ]
+    # Note that we ask for the prediction of the model among [0,1] 
+    # for any binary (i.e., sigmoid) or multi-class (i.e., softmax) AUROC optimization.
+    
+    # obtain adversarial examples
+    delta = PGDAdversary(model, X, y, criterion, epsilon=8.0/255, alpha=2.0/255, 
+                          attack_iters=10, restarts=1, norm='linf')
+    adv_input = torch.clamp(X + delta, min=lower_limit, max=upper_limit)
+    adv_input.requires_grad_(requires_grad=False)
+    # forward
+    robust_output = model(adv_input).view_as(y)
+    pred = torch.sigmoid(robust_output) # [batch_size, num_classess] when num_classes > 2, o.w. output [batch_size, ] 
+    robust_loss = criterion(pred, y)
+    if index % 30 == 0:
+      print("loss:", robust_loss.item())
+    
+    # backward
+    optimizer.zero_grad()
+    robust_loss.backward()
+    
+    # If U use RegAdvAUROCLoss, firstly U should use `optimizer.record_grad()`, then use `optimizer.step()` !!!!
+    # optimizer.record_grad()
+    optimizer.step()</code></pre>
               
               <a id="Model"></a>              
               <!-- Submit request-->

@@ -358,39 +358,13 @@ function showHide(element) {
               <nav aria-label="breadcrumb">
                 <ol class="py-1 my-2 breadcrumb">
                   <li class="breadcrumb-item"><a href="tutorials.html">Documentation</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Sampler</li>
+                  <li class="breadcrumb-item active" aria-current="page">Optimizer</li>
                 </ol>
               </nav>
 
-              <h3>Stragidied Sampler</h3>
+              <h3>SGD4MinMaxPAUC</h3>
 
-              As the computation of AUC involves both positive and negative samples, it is essential that each class's samples are present within a batch. This necessity has led to the development of the following <b><code>StratifiedSampler</code></b> class:
-
-              <P></P>
-
-              <pre><code>  CLASS StratifiedSampler (class_vector, batch_size, rpos=1, rneg=4)     <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/dataloaders/sampler.py">[SOURCE]</a></code></pre> 
-
-              <P></P>
-
-              When the number of classes is equal to 2, sample according to the ratio of rpos and rneg. If the number of samples is not enough, complete by copying and sampling.
-
-              <P></P>
-
-              When the number of classes is greater than 2, sample according to the proportion of each class in the dataset.
-
-              <P></P>
-
-              When the number of classes is less than 2, an error is reported.
-
-              <P></P>
-
-              In addition, after sampling, the index will be randomly scrambled and this portion of data will be removed from the dataset.
-
-              <P></P>
-
-
-              <!--The following functions computer the AUPRC and Recall@K metrics as 
-              <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUPRC/metrics.py">[SOURCE]</a>:-->
+              This file introduces <b><code>XCurve.AUROC.optimizer.SGD4MinMaxPAUC</code></b> from <a href="https://github.com/statusrank/XCurve/blob/master/XCurve/AUROC/optimizer/minmax_opt.py">[SOURCE]</a>
 
             <!-- nwx-->
             <table class="table">
@@ -401,24 +375,40 @@ function showHide(element) {
                   </th>
                   <td>
                     
-                    <!-- <dt><strong>y_true</strong>, int, default=2</dt>
-                      <p>Number of components to keep. Should be in 
-                        <code class="docutils literal notranslate">
-                          <span class="pre">[1,</span> <span class="pre">min(n_samples,</span>
-                          <span class="pre">n_features,</span> 
-                          <span class="pre">n_targets)]</span>
-                        </code>.
-                      </p> -->
-                    <dt><strong>class_vector (torch.Tensor or np.ndarry)</strong></dt>
-                    <p>The input vector.
+                    <dt><strong>params</strong></dt>
+                    <p>the parameters of the model.
                     </p>
 
-                    <dt><strong>batch_size (int)</strong></dt>
-                    <p>Number of samples per batch.
+                    <dt><strong>a</strong></dt>
+                    <p>reformulation weights a.
                     </p>
 
-                    <dt><strong>rpos, rneg (int)</strong></dt>
-                    <p>They are only used in binary classification problems to control the sampling ratio of positive and negative class samples.
+                    <dt><strong>b</strong></dt>
+                    <p>reformulation weights b.
+                    </p>
+
+                    <dt><strong>lr (int)</strong></dt>
+                    <p>default=1e-2, learning rate
+                    </p>
+
+                    <dt><strong>momentum (int)</strong></dt>
+                    <p>default=`0`, similar to momentum in SGD.
+                    </p>
+
+                    <dt><strong>dampening (torch.Tensor or np.ndarry)</strong></dt>
+                    <p>default=`0`, the alpha in addition of gradient is (`1-dampening`).
+                    </p>
+
+                    <dt><strong>weight_decay (float)</strong></dt>
+                    <p>default=`0`, similar to weight_decay in SGD.
+                    </p>
+
+                    <dt><strong>nesterov (bool)</strong></dt>
+                    <p>default=`False`, similar to nesterov in SGD.
+                    </p>
+
+                    <dt><strong>clip_value (float)</strong></dt>
+                    <p>default=`5.0`, the gradient clip parameter.
                     </p>
 
                   </td>
@@ -426,16 +416,92 @@ function showHide(element) {
               </tbody>
             </table>
 
+            Note: <i>That this optimizer is used with <b><code>XCurve.AUROC.losses.PartialAUROC.InsRelaxedPAUCLoss</code></b>.</i>
+
+
             <h5>Example: </h5>
 
             <pre><code id="python_code">  import torch
   from easydict import EasyDict as edict
+  
+  # import loss of AUROC
+  from XCurve.AUROC.losses import get_losses
+  
+  # import optimier (or one can use any optimizer supported by PyTorch)
+  from XCurve.AUROC.optimizer import SGD4MinMaxPAUC
+  
+  # create model or you can adopt any DNN models by Pytorch
+  from XCurve.AUROC.models import generate_net
+  
+  # set params to create model
+  args = edict({
+    "model_type": "resnet18", # (support resnet18,resnet20, densenet121 and mlp)
+    "num_classes": 2,
+    "pretrained": None
+  })
+  
+  args_training = edict({
+    "train_batch_size": 32,
+    "test_batch_size": 32,
+    "num_workers": 4,
+    "loss_type": "InsRelaxedPAUCLoss",
+    "loss_params": {
+      "num_classes": 2,
+      "gamma": 1.0,
+      "E_k": 3,
+      "weight_scheme": "Poly",
+      "reduction": "mean",
+      "AUC_type": "OP",
+      "first_state_loss": torch.nn.BCELoss(),
+      "eps": 1e-6,
+      "reg_a":0.1,
+      "reg_b":0.2
+    },
+    "lr": 0.001,
+    "weight_decay": 1e-5,
+    "momentum": 0.9,
+    "nesterov": True,
+    "lr_decay_rate": 0.99,
+    "lr_decay_epochs": 1,
+    "epoch_num": 50,
+    "metric_params": {
+      "alpha": 0.4,
+      "beta": 0.1
+    },
+    "save_path": "./save/",
+    "seed": 7
+  })
+  
+  model = generate_net(args).cuda()
+  
+  num_classes = 2
+  ########################
+  #  create optimizer    #
+  ########################
+  a, b = torch.tensor(0.5, requires_grad=True), torch.tensor(0.5, requires_grad=True)
+  optimizer = SGD4MinMaxPAUC(
+    params=model.parameters(),
+    a=a,
+    b=b,
+    lr=args_training ['lr'],
+    weight_decay=args_training['weight_decay'],
+    clip_value=5,
+    epoch_to_opt=1
+  )
+  
+  # create loss criterion
+  criterion = get_losses(args_training)
+  
+  # create Dataset (train_set, val_set, test_set) and dataloader (trainloader)
+  # You can construct your own dataset/dataloader 
+  # but must ensure that there at least one sample for every class in each mini-batch 
+  # to calculate the AUROC loss. Or, you can do this:
   from XCurve.AUROC.dataloaders import get_datasets
   from XCurve.AUROC.dataloaders import get_data_loaders
-
+  
   # set dataset params, see our doc. for more details.
   dataset_args = edict({
-    "data_dir": "cifar-10-long-tail/", # relative path of dataset
+    "data_dir": "data/cifar-10-long-tail/",
     "input_size": [32, 32],
     "norm_params": {
       "mean": [123.675, 116.280, 103.530],
@@ -454,15 +520,33 @@ function showHide(element) {
       "6":0, "7":0, "8":0, "9":0
     }
   })
-
-  train_set, val_set, test_set = get_datasets(dataset_args) # load dataset
+  
+  train_set, val_set, test_set = get_datasets(dataset_args)
   trainloader, valloader, testloader = get_data_loaders(
     train_set,
     val_set,
     test_set,
     train_batch_size=32,
     test_batch_size =64
-  ) # load dataloader</code></pre>
+  )
+  # Note that, in the get_datasets(), we conduct stratified sampling for train_set  
+  # using the StratifiedSampler at from XCurve.AUROC.dataloaders import StratifiedSampler
+  
+  # forward of model
+  for x, target in trainloader:
+    x, target  = x.cuda(), target.cuda().reshape((-1, 1))
+    # target.shape => [batch_size, ]
+    # Note that we ask for the prediction of the model among [0,1] 
+    # for any binary (i.e., sigmoid) or multi-class (i.e., softmax) AUROC optimization.
+
+    pred = torch.sigmoid(model(x)) # [batch_size, num_classess] when num_classes > 2, o.w. output [batch_size, ] 
+
+    loss = criterion(pred, target)
+    print(loss.item())
+    # backward
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()</code></pre>
               
               <a id="Model"></a>              
               <!-- Submit request-->
